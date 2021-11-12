@@ -18,10 +18,13 @@ export class HttpService {
 
   getGameList(
     ordering: string,
-    search?: string
+    search?: string,
+    page?: string
   ): Observable<APIResponse<Game>> {
     let params = new HttpParams().set('ordering', ordering);
-
+    if(page){
+      params = params.set('ordering',ordering).set('page', page);
+    }
     if (search) {
       params = new HttpParams().set('ordering', ordering).set('search', search);
     }
