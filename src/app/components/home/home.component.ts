@@ -12,6 +12,7 @@ import { HttpService } from 'src/app/services/http.service';
 export class HomeComponent implements OnInit,OnDestroy {
 sort:string = 'asc';
 games:Array<Game> = [];
+page:number = 1;
   private routeSub: Subscription = new Subscription;
   private gameSub: Subscription = new Subscription;
   constructor(private httpService:HttpService, private activatedRoute:ActivatedRoute,private router:Router) { }
@@ -26,7 +27,7 @@ games:Array<Game> = [];
     });
   }
 
-  searchGames(sort:string, search?:string){
+  searchGames(sort:string, page?:string,search?:string,){
     this.gameSub=this.httpService.getGameList(sort,search).subscribe((gameList:APIResponse<Game>) => {
       this.games = gameList.results;
       console.log(this.games);
@@ -43,9 +44,13 @@ games:Array<Game> = [];
   }
 
   onScroll(){
-    this.searchGames('metacrit');
-    console.log('scrolled');
+    this.page++;
+    const pageParam=this.page.toString();
+    this.gameSub=this.httpService.getGameList(this.sort,'',pageParam).subscribe((gameList:APIResponse<Game>) => {
+      this.games = this.games.concat(gameList.results);
+    });
   }
+
 
 }
 
