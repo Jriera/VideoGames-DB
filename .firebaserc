@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "videogame-database-ng": {
+      "hosting": {
+        "ng-video-game-db": [
+          "videogame-database-ng"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "videogame-database-ng"
+  }
+}
